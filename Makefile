@@ -14,4 +14,4 @@ clean:
 	rm -f *.o prog2
 
 run:
-	./prog2 test0.txt
+	./prog2 test/input_2500_2.txt out.txt

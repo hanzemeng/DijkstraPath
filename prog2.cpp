@@ -13,11 +13,12 @@ void DijkstraPath();
 
 int main(int argc, char** argv)
 {
+    ofstream outputFile(argv[2]);
     setUp(argv[1]);
     DijkstraPath();
     for(Vertex& v : vertices)
     {
-        v.print();
+        outputFile << v.printPath();
     }
     return 0;
 }
@@ -38,7 +39,6 @@ void DijkstraPath()
 {
     set<Vertex*, comp> uncheckedVertices;
     vertices[0].dist = 0;
-    vertices[0].pathToSelf.push_back(&vertices[0]);
     uncheckedVertices.insert(&vertices[0]);
     for(int i=1; i<VERTEX_COUNT; i++)
     {
@@ -57,8 +57,7 @@ void DijkstraPath()
             {
                 uncheckedVertices.erase(n);
                 n->dist = newDist;
-                n->pathToSelf = currentVertex->pathToSelf;
-                n->pathToSelf.push_back(n);
+                n->prev = currentVertex;
                 uncheckedVertices.insert(n);
             }
         }
@@ -73,15 +72,32 @@ void setUp(string path)
     getline(inFile, temp);
     int count = stoi(temp);
     VERTEX_COUNT = count;
-    vertices.reserve(count);
-    while(count-->0)
+    vertices.reserve(VERTEX_COUNT);
+    while(count-- > 0)
     {
         getline(inFile, temp);
         vertices.push_back(Vertex(temp));
     }
     getline(inFile, temp);
     count = stoi(temp);
-    while(count-->0)
+
+    if(0 == count)
+    {
+        for(int i=0; i<VERTEX_COUNT; i++)
+        {
+            for(int j=0; j<VERTEX_COUNT; j++)
+            {
+                if(i==j)
+                {
+                    continue;
+                }
+                vertices[i].addNeighbor(&vertices[j]);
+                vertices[j].addNeighbor(&vertices[i]);
+            }
+        }
+    }
+
+    while(count-- > 0)
     {
         getline(inFile, temp);
         temp += " ";
@@ -110,4 +126,5 @@ void setUp(string path)
         vertices[v1].addNeighbor(&vertices[v2]);
         vertices[v2].addNeighbor(&vertices[v1]);
     }
+    inFile.close();
 }

@@ -14,6 +14,8 @@ struct Vertex
     void addNeighbor(Vertex*);
     double distanceFrom(Vertex*);
     void print();
+    std::string printPath();
+    std::string printPath(Vertex*);
 
 
     int ID;
@@ -21,8 +23,7 @@ struct Vertex
     double x;
     double y;
     std::vector<Vertex*> neighbors;
-    std::vector<Vertex*> pathToSelf;
-
+    Vertex* prev;
     static int COUNT;
 };
 

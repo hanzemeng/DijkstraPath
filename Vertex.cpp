@@ -3,11 +3,11 @@ using namespace std;
 
 int Vertex::COUNT = 0;
 
-Vertex::Vertex() : ID(COUNT++), x(0), y(0), dist(INFINITY)
+Vertex::Vertex() : ID(COUNT++), dist(INFINITY), x(0), y(0), prev(nullptr)
 {}
-Vertex::Vertex(double x, double y) : ID(COUNT++), x(x), y(y), dist(INFINITY)
+Vertex::Vertex(double x, double y) : ID(COUNT++), dist(INFINITY), x(x), y(y), prev(nullptr)
 {}
-Vertex::Vertex(string input) : ID(COUNT++), dist(INFINITY)
+Vertex::Vertex(string input) : ID(COUNT++), dist(INFINITY), prev(nullptr)
 {
     string temp = "";
     for(char c : input)
@@ -42,10 +42,23 @@ void Vertex::print()
         cout << n->ID << ", ";
     }
     */
-    cout << ID << ": ";
-    for(int i=pathToSelf.size()-1; i>=0; i--)
+}
+
+string Vertex::printPath()
+{
+    string res = printPath(prev);
+    res += to_string(ID);
+    res += "\n";
+    return res;
+}
+string Vertex::printPath(Vertex* current)
+{
+    if(!current)
     {
-        cout << pathToSelf[i]->ID << ", ";
+        return "";
     }
-    cout << endl;
+    string res = printPath(current->prev);
+    res += to_string(current->ID);
+    res += ", ";
+    return res;
 }
