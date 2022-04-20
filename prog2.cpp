@@ -16,10 +16,12 @@ int main(int argc, char** argv)
     ofstream outputFile(argv[2]);
     setUp(argv[1]);
     DijkstraPath();
-    for(Vertex& v : vertices)
+
+    for(int i=1; i<VERTEX_COUNT; i++)
     {
-        outputFile << v.printPath();
+        outputFile << vertices[i].printPath();
     }
+    outputFile.close();
     return 0;
 }
 

@@ -11,7 +11,7 @@ Vertex.o: Vertex.cpp Vertex.h
 
 
 clean:
-	rm -f *.o prog2
+	rm -f *.o prog2 out.txt
 
 run:
-	./prog2 test/input_2500_2.txt out.txt
+	./prog2 test/input_5000_1.txt out.txt
