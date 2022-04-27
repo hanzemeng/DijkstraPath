@@ -5,8 +5,8 @@
 #include <set>
 using namespace std;
 
-int VERTEX_COUNT;
-vector<Vertex> vertices;
+int VERTEX_COUNT; // number of vertices
+vector<Vertex> vertices;  // vertex objects
 
 void setUp(string path);
 void DijkstraPath();
@@ -29,11 +29,11 @@ struct comp
 {
     bool operator()(const Vertex* lhs, const Vertex* rhs) const
     {
-        if(lhs->dist == rhs->dist)
+        if(lhs->dist == rhs->dist) // if distance is the same, then sort by ID
         {
             return lhs->ID < rhs->ID;
         }
-        return lhs->dist < rhs->dist;
+        return lhs->dist < rhs->dist; // sort by distance
     }
 };
 
@@ -41,15 +41,14 @@ void DijkstraPath()
 {
     set<Vertex*, comp> uncheckedVertices;
     vertices[0].dist = 0;
-    uncheckedVertices.insert(&vertices[0]);
-    for(int i=1; i<VERTEX_COUNT; i++)
+    for(int i=0; i<VERTEX_COUNT; i++)
     {
         uncheckedVertices.insert(&vertices[i]);
     }
 
     while(!uncheckedVertices.empty())
     {
-        Vertex* currentVertex = *uncheckedVertices.begin();
+        Vertex* currentVertex = *uncheckedVertices.begin(); // first element in the set always has the shortest distance
         uncheckedVertices.erase(uncheckedVertices.begin());
 
         for(Vertex* n : currentVertex->neighbors)
@@ -57,10 +56,10 @@ void DijkstraPath()
             double newDist = currentVertex->dist + currentVertex->distanceFrom(n);
             if(n->dist > newDist)
             {
-                uncheckedVertices.erase(n);
+                uncheckedVertices.erase(n); // set doesn't have a way to update an element 
                 n->dist = newDist;
                 n->prev = currentVertex;
-                uncheckedVertices.insert(n);
+                uncheckedVertices.insert(n); // so the alternative is to remove the old element and insert the new element
             }
         }
     }

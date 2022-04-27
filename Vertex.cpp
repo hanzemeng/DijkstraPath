@@ -3,9 +3,9 @@ using namespace std;
 
 int Vertex::COUNT = 0;
 
-Vertex::Vertex() : ID(COUNT++), dist(INFINITY), x(0), y(0), prev(nullptr)
+Vertex::Vertex() : ID(COUNT++), x(0), y(0), dist(INFINITY), prev(nullptr)
 {}
-Vertex::Vertex(double x, double y) : ID(COUNT++), dist(INFINITY), x(x), y(y), prev(nullptr)
+Vertex::Vertex(double x, double y) : ID(COUNT++), x(x), y(y), dist(INFINITY), prev(nullptr)
 {}
 Vertex::Vertex(string input) : ID(COUNT++), dist(INFINITY), prev(nullptr)
 {
@@ -28,12 +28,12 @@ void Vertex::addNeighbor(Vertex* a)
 {
     neighbors.push_back(a);
 }
-double Vertex::distanceFrom(Vertex* a)
+double Vertex::distanceFrom(Vertex* a) const
 {
     return sqrt((a->x-x)*(a->x-x) + (a->y-y)*(a->y-y));
 }
 
-void Vertex::print()
+void Vertex::print() const
 {
     /*
     cout << ID << ": " << x << ", " << y << ". Nei: ";
@@ -44,14 +44,14 @@ void Vertex::print()
     */
 }
 
-string Vertex::printPath()
+string Vertex::printPath() const
 {
     string res = printPath(prev);
     res += to_string(ID);
     res += "\n";
     return res;
 }
-string Vertex::printPath(Vertex* current)
+string Vertex::printPath(Vertex* current) const
 {
     if(!current)
     {

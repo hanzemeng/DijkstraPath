@@ -12,19 +12,20 @@ struct Vertex
     Vertex(double, double);
     Vertex(std::string);
     void addNeighbor(Vertex*);
-    double distanceFrom(Vertex*);
-    void print();
-    std::string printPath();
-    std::string printPath(Vertex*);
+    double distanceFrom(Vertex*) const;
+    void print() const;
+    std::string printPath() const;
+    std::string printPath(Vertex*) const;
 
 
     int ID;
-    double dist;
     double x;
     double y;
     std::vector<Vertex*> neighbors;
-    Vertex* prev;
-    static int COUNT;
+    
+    double dist; // record the shortest distance to self
+    Vertex* prev; // record the previous vertex in the shortest path to self
+    static int COUNT; // use to set up ID
 };
 
 #endif
